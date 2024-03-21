@@ -1,0 +1,54 @@
+%% drawing primitives and transformations
+/tags [] def
+
+/_linewidth 1 def
+/setlinewidth {/_linewidth exch def} def
+
+/translate {pop pop} def
+/rotate {pop} def
+/scale {pop pop} def
+
+/ss (____) def
+/cvss { ss cvs } def
+
+/newpath {} def
+/moveto {
+	/y exch def
+	/x exch def
+} def
+/lineto {
+	/y exch def
+	/x exch def
+} def
+
+/circle {
+  /r exch def
+  /y exch def
+  /x exch def
+  [ (<circle r=") r cvss (" cx=") x cvss (" cy=") y cvss 
+    (" stroke=") (" fill=") (" stroke-width=") _linewidth cvss (" />) ] {print} forall
+} def
+
+/stroke {} def
+/showpage {
+(<svg xmlns="http://www.w3.org/2000/svg">
+<line-width=") print _linewidth cvss print (">) print 
+(\nSorry, your browser does not support SVG.
+</svg>) print
+} def
+
+72 72 scale
+4.25 5.5 translate
+1 72.0 div setlinewidth
+
+144 144 translate
+30 rotate	% Note that PostScript works with angles in degrees
+newpath
+0 0 moveto
+144 0 lineto
+144 144 lineto
+0 144 lineto
+0 0 lineto
+stroke
+
+showpage

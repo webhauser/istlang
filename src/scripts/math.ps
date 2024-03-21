@@ -1,0 +1,72 @@
+%% Math library
+
+/acos { dup dup mul neg 1.0 add sqrt exch atan } bind def	% degrees acos real
+
+/vn3 { dup mul exch dup mul add exch dup mul add sqrt } def % (x y z) vn3 real
+
+% multiply 3D vector with factor
+%(x y z f)
+/v3m {
+    dup 3 1 roll mul 4 1 roll %(z*f x y f)
+    dup 3 1 roll mul 3 1 roll %(z*f y*f x f)
+    mul exch 3 -1 roll        %(x*f y*f z*f)
+} def
+
+% subtract 3D vectors
+%(x1 y1 z1 x2 y2 z2)
+/v3s {
+    6 -3 roll               %(x2 y2 z2 x1 y1 z1)
+    4 -1 roll sub           %(x2 y2 x1 y1 z1-z2)
+    5 1 roll 3 -1 roll sub  %(z1-z2 x2 x1 y1-y2)
+    4 1 roll exch sub       %(y1-y2 z1-z2 x1-x2)
+    3 1 roll                %(x1-x2 y1-y2 z1-z2)
+} def
+
+% add 3D vectors
+%(x1 y1 z1 x2 y2 z2)
+/v3a {
+    4 -1 roll add          %(x1 y1 x2 y2 z2+z1)
+    5 1 roll 3 -1 roll add %(z2+z1 x1 x2 y2+y1)
+    4 1 roll add           %(y2+y1 z2+z1 x1+x2)
+    3 1 roll               %(x1+x2 y2+y1 z2+z1)
+} def
+
+% angle between two 3D vectors
+%(x1 y1 z1 x2 y2 z2)
+/ang {
+    [ 4 1 roll ]
+      4 1 roll
+    [ 4 1 roll ]
+    %([v2] [v1])
+    2 dict begin
+    /v1 exch def
+    /v2 exch def
+        v1 aload pop n3 v2 aload pop
+        4 -1 roll v3m
+        %(|v1|*v2)
+        v2 aload pop n3 v1 aload pop
+        4 -1 roll v3m
+        %(|v1|*v2 |v2|*v1)
+        v3s n3
+        %(||v1|*v2-|v2|*v1|)
+        v1 aload pop n3 v2 aload pop
+        4 -1 roll v3m
+        %(|v1|*v2)
+        v2 aload pop n3 v1 aload pop
+        4 -1 roll v3m
+        %(|v1|*v2 |v2|*v1)
+        v3a n3
+        %(||v1|*v2-|v2|*v1| ||v1|*v2+|v2|*v1|)
+        atan
+        %(atan(||v1|*v2-|v2|*v1|,||v1|*v2+|v2|*v1|))
+        2.0 mul
+    end
+} def
+
+% A function that helps make named local variables
+% To use it give it an array of variable names (in reverse stack order), 
+% eg. to use at the start of your /a function, it would look like: 
+% /ang { {z2 y2 x2 z1 y1 x1} args-begin ... . 
+% Or to use in the middle where you're already using variables, 
+% it would look like: {v1 v2} args-begin and replaces 3 lines.
+/args-begin { dup length dict begin {exch def} forall } def

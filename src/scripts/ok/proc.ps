@@ -1,0 +1,20 @@
+%% late binding proc test
+
+%% PostScript execution of nested proceduresfrom https://stackoverflow.com/users/701996/kens
+%% So immediately before the execution of 'repeat' you would have two objects on the
+%% stack, the counter and an executable array containing a single executable name.
+%% You don't look up the name until the executable array containing the name is executed.
+
+/test {(This is my initial string\n) print} def
+
+2 {test} repeat
+
+2 {test} 
+
+% Notice that I've redefined 'test' after creating the executable array containing the 
+% executable name 'test', yet the execution uses the later definition of test. 
+% As you can see, its vitally important not to do name lookup too early!
+
+/test {(This is my second string\n) print} def 
+
+repeat

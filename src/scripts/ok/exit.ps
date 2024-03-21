@@ -1,0 +1,9 @@
+%% loop exit test
+
+/max 8 def
+
+0 20 {
+	1 add dup max gt {exit} if
+	dup =
+} repeat
+

@@ -1,0 +1,41 @@
+(%% A complete truth table:\n) print
+
+true true or	% true
+true false or	% true
+false true or	% true
+false false or	% false
+
+17 5 or		% 21
+
+(%% comparing reals with integers:\n) print
+103.0 103 eq = % true
+103.0 103 ge = % true
+103.0 103 gt = % false
+
+(%% comparing mark objects:\n) print
+mark [ eq = % true
+
+(%% comparing null objects to integers and booleans:\n) print
+null 0 eq = % false
+null false eq = % false
+
+(%% comparing strings and name objects:\n) print
+(Palatino-Roman)
+/Palatino-Roman eq = % true
+(abc)
+(defabc)
+3 3 getinterval eq = % true
+(abc) (abc) eq = % true (an exception)
+
+(%% comparing array objects:\n) print
+[ 1 2 3 ] dup eq = % true
+[ 1 2 3 ]
+[ 1 2 3 ] eq = % false (arrays created independently)
+
+(%% comparing procedure objects:\n) print
+{ 1 exch sub }
+{ 1 exch sub } eq = % false
+
+(%% comparing dictionary objects:\n) print
+5 dict dup begin
+currentdict eq = % true

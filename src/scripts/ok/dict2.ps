@@ -1,0 +1,12 @@
+(%% define the function's arguments as variables
+) print
+
+% a b c  myproc  result
+/myproc {
+   10 dict begin
+   {/c /b /a} {exch def} forall
+   a = b = c =
+   end
+} def
+
+1 2 3 myproc

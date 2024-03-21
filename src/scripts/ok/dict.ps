@@ -1,0 +1,13 @@
+%% Level 1 dictionary usage
+
+/pi 3.14159265359 def
+
+% create dictionary for local variables
+2 dict begin
+	/pi 3.14 def
+	/e  2.71828 def
+	pi =
+end
+
+% after the end getting value from the original context
+pi =

@@ -1,0 +1,34 @@
+/hypotenuse {
+	/b exch def
+	/a exch def
+	a dup mul b dup mul add sqrt
+} def
+
+(first proc using vars:\n) print
+3 4 hypotenuse =
+
+/hypotenuse { % a b
+	dup mul % a b*b
+	exch % b*b a
+	dup mul % b*b a*a
+	add % b*b+a*a
+	sqrt % the square root of the sum is left on the stack
+} def
+
+(redefined procedure using just stack:\n) print
+3 4 hypotenuse =
+
+
+/h1 {dup mul exch dup mul add sqrt } def
+
+/h2 { 2 dict begin
+/y exch def
+/x exch def
+x x mul y y mul add sqrt
+end } def
+
+(/h1 using stack:\n) print
+3 4 h1 =
+
+(/h2 using local vars:\n) print
+3 4 h2 =

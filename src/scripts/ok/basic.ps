@@ -1,0 +1,61 @@
+% simple tests
+
+(%%%%%%%%% string literal examples %%%%%%%%%
+) print
+
+(This is a string)
+(Strings may contain newlines
+and such.)
+(Strings may contain special characters *!&}^% and
+balanced parentheses ( ) (and so on).)
+(The following is an empty string.)
+()
+(It has 0 (zero) length.)
+(These \
+two strings \
+are the same.)
+(These two strings are the same.)
+(This string has a newline at the end of it.
+)
+(So does this one.\n)
+(This string contains\012 octal newline char\052star.)
+(This is a hex string
+) <3031323334353637383920>
+count {print} repeat
+
+(
+%%%%%%%%% radix numbers %%%%%%%%%
+) print
+
+8#1777		=
+16#FFFE		=
+2#1000		=
+
+10 = % 10
+1 2 3 add add = % 6
+
+10
+3.5
+mul
+=
+
+(Hello\n) print
+
+/cm {28.35 mul} def
+
+10 cm =
+
+/valami =
+
+% redefining variables
+
+/foo 10 def
+/foo foo 1 add def
+foo =
+
+5 6 add
+/foo exch def %foo now contains 11
+foo =
+
+/foo foo 10 mul def % foo will now contain 110
+foo =

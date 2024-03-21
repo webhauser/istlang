@@ -1,0 +1,36 @@
+%% array tests
+
+/=== {(====================\n) print} def
+
+/print-array {
+	===
+	{=} forall
+} def
+
+(Empty array size is ) print
+[] length =
+
+[5 4 3]
+
+mark 5 4 3 counttomark array astore exch pop % Same as above
+
+print-array
+print-array
+
+(Printing a mixed element array\n) print
+
+[1 2 3 add {add} /valami]
+
+print-array
+
+(%% This array contains ten elements
+) print
+[ /one dup dup (four) /five 3 3 add /seven { 8 (the whole procedure) } 9 10 ]
+
+print-array
+
+(%% Making a Procedure into a Literal Array
+) print
+{ /one dup dup 3 3 add } cvlit
+
+print-array

@@ -1,0 +1,9 @@
+/strcat {
+    2 copy
+    length exch length exch 1 index add % a b an bn+an
+    string dup 0 6 -1 roll putinterval % b an str
+    dup 4 2 roll exch putinterval % (ab)
+} bind def
+
+(./scripts) (/init.ps) strcat
+print

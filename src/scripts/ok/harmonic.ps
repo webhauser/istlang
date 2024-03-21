@@ -1,0 +1,13 @@
+% harmonic test
+
+/harmonic {    
+	/num 0 def
+	/current 1 def
+	{
+		/num 1 current div num add def
+		/current current 1 add def
+	} repeat
+	num
+} def
+
+10 harmonic =

@@ -1,0 +1,13 @@
+%% This code will compute the max and needs two numbers put on the stack before called.
+%% It will put nothing on the stack if they are equal.
+
+/max {
+	/num1 exch def
+	/num2 exch def
+
+	num1 num2 gt {num1} if
+	num1 num2 lt {num2} if
+} def
+
+-100 99 max
+99 max

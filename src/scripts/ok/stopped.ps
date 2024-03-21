@@ -1,0 +1,27 @@
+%% stop stopped example
+
+%% stop without context quits from interpreter
+% stop
+
+%% stop within stopped context continues at stopped true
+{
+  1 1 10 {
+	(Az elet szep!\n) print
+	4 gt {stop} if
+  } for
+  (Megyunk tovabb..\n) print
+} 
+stopped {
+  (*** Interrupted ***\n) print
+  (Ennyi volt.\n) print
+} if
+
+%% exceptions can be catched within stopped context
+{
+  -5 1 5 {
+	5 exch idiv =
+   } for
+}
+stopped {
+  (Exception caught!\n) print
+} if

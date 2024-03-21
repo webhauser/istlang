@@ -1,0 +1,10 @@
+/== {=} def
+
+[10 20 30 40 (otven)]
+
+% print out all the elements in an array or procedure
+dup type /arraytype eq 1 index type /packedarraytype eq or { %ifelse
+	0 exch { %forall
+		exch dup (XXX) cvs print (: ) print 1 add exch ==
+	} forall pop
+}{ pop } ifelse

@@ -1,0 +1,21 @@
+%% Draw rectangle using arguments
+
+72 72 scale
+4.25 5.5 translate
+1 72 div setlinewidth
+
+/draw-rectangle {
+/h exch def
+/w exch def
+newpath
+0 0 moveto
+w 0 rlineto
+0 h rlineto
+w neg 0 rlineto
+closepath
+stroke
+} def
+
+2 3 draw-rectangle
+
+showpage

@@ -1,0 +1,26 @@
+/pi (piiiiiiiiii) def
+
+%% The << operator is equivalent to the following code:
+/dict-start mark def
+
+%% The >> operator is equivalent to the following code:
+/dict-end {
+	counttomark 2 idiv
+	dup dict
+	begin
+		{def} repeat
+		pop
+		currentdict
+	end
+} def
+
+/Numbers {
+   dict-start
+     /pi 3.1415
+     /e  2.71828
+   dict-end
+} def
+
+Numbers begin
+pi = end
+pi =

@@ -1,0 +1,363 @@
+% komment az elso szazalek jeltol kezdve a sor vegeig.
+%% Interpreter teszt script file
+%% Irta: Hauser Istvan
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% HIBALISTA:
+%	5inch	-	5 inch
+
+[ 1 2 (Hello, world!) [4 /okos] 5 ] 3 get 1 get = 
+
+10 {(Hello, world!) print} dup 5 exch repeat repeat
+
+/popout {=} def
+
+/webHauser (popout) = popout 
+
+/Error::StackDump {		% Most DEFERRED uzemmodba kerult az interpreter.
+=	(====================Stack dump:====================) print 
+	(Objects in operand stack: ) print count =
+	count {=} repeat
+} def
+
+1 2 3
+100 Error::StackDump
+
+(Nothing is more painful to read than C written with a local accent.)
+
+<~ Kepzeld ez egy BASE85 string literal!
+
+%% Az interpreter alapallapotban DEFERRED_LEVEL=0
+%% NORMAL vagyis EXECUTABLE uzemmodban van.
+
+/StackDump {	% Most DEFERRED_LEVEL=1 uzemmodba kerult az interpreter.
+	(====================Stack dump:====================) print 
+	count 
+	{ % Most DEFERRED_LEVEL=2
+	=
+	} % Most az interpreter visszal‚p DEFERRED_LEVEL=1 uzemmodba.
+	repeat 
+} % Figyeljuk meg, hogy most DEFERRED_LEVEL=0 NORMAL uzemmodba kerultunk.
+
+def~> print
+
+(===============================================================
+
+TARGET:
+
+Az Interpreter file-bol torteno token beolvasas es vegrahajtas operatorok megvalositasa, 
+hogy teljes legyen a script rendszer.
+
+Forrassz”veg compilalasa, binaris objektum szekvencia kimentese, betoltese es vegrehajtasa.
+
+/run {file cvx exec} def
+(script2.txt) run
+
+) print
+
+0 1 2 3 4 5 6 7 8 9
+= = = = = = = = = =
+
+null  =
+true  =
+false =
+mark  =
+
+1.0 =
+
+/name =
+
+(egy string) =
+
+(Foglalt rendszer nevek:
+
+null
+true 
+false
+
+-num- -num- add -x-
+-num- -num- mul -x-
+-num- -num- div -x-
+-num- -num- idiv -x-
+
+-any- pop
+-an2- -an1- exch -an1- -an2-
+-any- dup -any- -any-
+
+clear
+count -int-
+-int- array -array-
+--mark-- -an0- -an1- ... -anN- -array- astore -array-
+mark 
+cleartomark 
+counttomark -int-
+-any- cvx 
+rand -int-
+-int- srand
+-name- -any- def
+-int- dict -dict-
+-dict- begin
+end
+
+-int- -proc- repeat
+-string- print
+-any- =
+
+-bool- -proc- if
+-bool- -prc1- prc2- ifelse
+)
+
+print % utasitas
+
+% Nevek es muveletek
+
+/x 100 def
+
+10 x x add mul =
+
+
+% szubrutinok 
+
+/inch {72 mul} def
+5 inch
+
+(Szubrutin eredmenye: ) print =
+
+
+% arrays
+
+(A tomb eleme: ) print [1 2 3] 1 get =
+
+%% felteteles utasitasok hasznalata
+
+(Az if utasitas hasznalata:) print
+
+(rendben) false {} if =
+true  {(rendben)} if =
+ 
+true  {1}{2} ifelse =
+false {1}{2} ifelse =
+
+(A kiertekelt if utasitas eredmenye: ) print
+1 1 eq {(igaz)}{(hamis)} ifelse =
+true false eq {(igaz)}{(hamis)} ifelse =
+true true eq {(igaz)}{(hamis)} ifelse =
+
+% Using String test
+
+/str (...) def
+
+(A string elotte:) print str =
+
+str 0 64 put	% ASCII char code '@'
+str 1 65 put	% ASCII char code 'A'
+str 2 66 put	% ASCII char code 'B'
+
+(0. elem:)  print str 0 get =
+(1. elem:)  print str 1 get =
+(2. elem:)  print str 2 get =
+
+(A string utana:) print str =
+
+(* Using Dictionaries\n
+ * Kitoroltem a DictionaryObject destruktorat es rendesen lefutott!!!
+ *) print
+
+2 dict
+dup /e  2.718281828 put
+dup /pi 3.1415926 put
+dup /e get =
+dup /pi get =
+
+%% << PS Level 2 dictionary start token
+mark
+
+/ScreenMode    13
+/ScreenWidth 1024 
+/ScreenHeight 768
+/ScreenDepth   32
+
+%% >> PS Level 2 end dictionary token
+counttomark 2 idiv dup dict begin {def} repeat pop currentdict end
+
+dup (ScreenWidth: ) print /ScreenWidth get =
+dup (ScreenHeight: ) print /ScreenHeight get =
+dup {= =} forall
+    (ScreenDepth: ) print /ScreenDepth get =
+(----------------Dictionary test---------------) print
+
+10 dict dup
+/pi 3.1415926 put dup
+/e 2.718281 put dup
+/cm {28.35 mul} put dup
+/e get =
+/cm get =
+
+<</ScreenWidth 1024 /ScreenHeight 768>>	{= =} forall
+
+(Ciklus hasznalata\nPelda sima ciklusra. A szamok 1-tol 10-ig:) print
+1 1 10 {=} for
+
+(Random szamok hasznalata:) print
+1000 srand
+/random {rand =} def
+(Itt egy random szam:) print rand =
+(Tovabbi random szamok:) print
+10 {rand =} repeat
+
+(Pelda string tomb hasznalatara.\nAz alabbi operatorokat kell meg implementalni:) print
+[	(token)
+	(exec)
+	(file)
+	(read)
+	(readstring)
+	(readline)
+	(write)
+	(writeline)
+	(printobj)
+	(any --xcheck-- bool\n\tTests whether the operand has the executable or literal attribute.)
+	(systemtime int\n\tReturns with machine timer millisecs.)
+] {print} forall
+
+currentdict /pi 3.1415926 put 
+
+(Vegyes tomb ciklus:) print [1 2 pi 4 5 inch (Hello emberek!)] {=} forall
+
+(String ciklus:) dup print {=} forall
+
+(Dictionary ciklus:) print <</FullScreen true /XSize 800 /YSize 600>> {= =} forall
+
+(HIBALISTA:
+* RENDBEN: Ha egy nevnek nem talalja a dictstack-beli erteket exception kell.
+* Mit tegyen a scanner egy immediate evaluated n‚vn‚v ?
+* Debug uzemmodban az objektum sorszamat is ki kellene irni.
+* repeat eseteben amikor /proc ot elfogad
+* { .. { .. beagyazott procedurak hasznalata tobb kerdest vet fel:
+\tMi t”rt‚nik deferred uzemmodban a nevekkel ?
+\tMi t”rt‚nik akkor, ha pl. az interpreter deferred uzemmodban van es array[]  jon ?
+\tMi t”rt‚nik akkor, ha pl. az interpreter deferred uzemmodban van es exec array azaz proc{} jon?
+) print
+
+/text (Figyelem, emberek!) def
+
+(hello)  (_____)	cvs print
+123      (_____)    cvs print
+123.1234 (___.____) cvs print
+/valami  (________) cvs print
+
+200 Error::StackDump
+
+[ (hello)
+	123
+	4.56 5.44 add
+	(0123456789) cvs print
+	/egy
+	100 inch ] {(__________) cvs print} forall
+
+/proc {=} def
+/limit 10 def
+/hello {text print} def
+1 1 limit {=} for
+
+(Normalisan kiirva:) print
+limit {text print} repeat
+
+(A meglepetes csak most kovetkezik:) print
+
+/Nevek [
+(Gizella)
+(Maria)
+(Janos)
+(Zoltan)
+(Erika)
+(Huba)
+(Geza)
+(Piroska)
+(Etelka)
+(Csaba)] def
+
+300 Error::StackDump
+
+/Length 10 def % A lista elemszama
+(Nevek lista kiirasa:) print Nevek {=} forall
+(Veletlenszeruen valasztott nevek:) print 
+limit {Nevek rand Length mod get print} repeat
+
+(Circle example:) print
+
+%!PS
+/inch {72 mul} def
+/Circle 10 dict def
+Circle begin
+	/radius 3 inch def
+	/linewidth 0.5 inch def
+	/Draw {
+		(Line width is:) print linewidth =
+		(Radius is:) print radius =
+	} def
+end
+Circle begin
+	4.25 inch 5.5 inch Draw
+end
+
+(PI=) print pi
+
+(__EOF__) Error::StackDump
+
+(
+/sound { 10 setvolume (ring.wav) play } def
+
+1 72 -10000 0 sound
+/CLOCKA:Minute hand xrot 360 m 6.0 * sub s 10.0 div sub setvar
+
+)
+
+/keyframe 10 def
+[
+	[0 0 0 0  0 0 0  0 0 0 keyframe]
+	[1 0 0 0  0 0 0  0 0 0 keyframe]
+	[2 0 0 0  0 0 0  0 0 0 keyframe]
+] {=} forall
+
+(SWF 3 Action Model) print
+
+<<
+	/Play 1
+	/Stop 2
+	/NextFrame 3
+	/PrevFrame 4
+	/GotoFrame 5
+	/GotoLabel 6
+	/WaitForFrame 7
+	/StopSounds 8
+	/ToggleQuality 9
+	/SetTarget 10
+>> {= =} forall
+
+(--------------------
+
+x# y# z# false entity _PositionEntity
+x# y# z#	   entity _MoveEntity
+x# y# z# false entity _TranslateEntity
+
+pitch# yaw# roll# false entity _RotateEntity
+pitch# yaw# roll# false entity _TurnEntity
+
+/camera
+/light
+/sprite
+/pivot
+/plane
+/cube
+/cone
+/cylinder
+/sphere
+/mesh
+/terrain
+
+
+)
+
+/name length =
+(12345) length =
+[ 1 2 3 4 5 ] length =
+

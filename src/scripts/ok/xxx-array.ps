@@ -1,0 +1,46 @@
+[5 4 3] % A three-element array, with elements 5, 4, 3
+
+mark 5 4 3 counttomark array astore exch pop % Same as above
+
+{=} forall
+{=} forall
+
+(===1. dupla ciklus teszt===\n) print
+
+/webHauser (http://www.webhauser.com) def
+/mutat {webHauser print} def
+
+7 {
+	3 	
+	{mutat} 
+	% Az elobb sajnos ez most vegrehajtodott! 
+	% opstack.push(obj) kell ha kozvetlenul fordul elo
+	% vegrehajtas csak a nev hivatkozas feloldasnal tortenik!
+	% miert hajtodott vegre?
+	% mert beagyazva volt es {mutat}-executable array lett az opstack tetejen
+	% utana bemasolodott egy vegrehajthato tombbe az 1. elemnek.
+	% amikor ez a vegrehajthato tomb elemenkent kiertekelodik,
+	% az executable array tipusu objektumot vegrehajtja az exec()
+	repeat
+} repeat
+
+
+(===2. Itt egy dupla ciklus===) print
+0 1 7 {
+	0 1 4 { = } for
+} for
+(===dupla ciklus vege===\n) print
+
+/inch {72 mul} def
+
+3 {
+	(Ciklus tesztek:) print
+	0 1 10 {=} for
+	0 1 10 {1 add =} for
+	0 1 10 {2 add =} for
+	0 1 10 {inch =} for
+	0 -1 -10 {=} for
+	-10 1 0 {=} for
+} repeat
+
+3 { (Jo napot kivanok!) print } repeat

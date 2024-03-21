@@ -1,0 +1,23 @@
+%% Draw rectangle procedure using arguments and 
+%% local variables to avoid variable name conflicts.
+
+72 72 scale
+4.25 5.5 translate
+1 72 div setlinewidth
+
+/draw-rectangle { 2 dict begin	%  sets up a local variable mechanism
+	/h exch def
+	/w exch def
+	newpath
+	0 0 moveto
+	w 0 rlineto
+	0 h rlineto
+	w neg 0 rlineto
+	0 h neg rlineto
+	closepath
+	stroke
+end } def	% end restores the original environment
+
+2 3 draw-rectangle
+
+showpage

@@ -1,0 +1,24 @@
+%% Example 11.7: Concatenating Two Strings Together
+% (string1) (string2) concatenate string3
+% array1 array2 concatenate array3
+
+/concatenate {
+	dup type 2 index type 2 copy ne { %if
+		pop pop
+		errordict begin (concatenate) typecheck end
+	}{ %else
+		/stringtype ne exch /arraytype ne and {
+			errordict begin (concatenate) typecheck end
+		} if
+	} ifelse	
+	dup length 2 index length add 1 index type
+	/arraytype eq { array }{ string } ifelse
+	% stack: arg1 arg2 new
+	dup 0 4 index putinterval
+	% stack: arg1 arg2 new
+	dup 4 -1 roll length 4 -1 roll putinterval
+	% stack: new
+} bind def
+
+(string1) (string2) concatenate =
+[ /zero /one /two ] [ /three /four /five /six ] concatenate =

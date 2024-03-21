@@ -1,0 +1,78 @@
+%!PS
+(3 2 add) cvx exec =
+3 2 /add exec = = = 
+3 2 /add cvx exec =
+
+(
+
+(12345) length =
+[1 2 add 3] length =
+<</a 1 /b 2 /c 3>> length =
+
+) cvx exec
+
+/average {add 2 div} def
+
+(Average:) print 60 40 average =
+
+% Az egyszeru def-es peldaknal a proc objektum az operandus stackbe kerul.
+% miert? 
+
+/webHauser (http://www.webhauser.com) def
+
+
+/mutat {webHauser print} def
+
+mutat
+
+7 {
+	3 
+	
+	{mutat} 
+	% Az elobb sajnos ez most vegrehajtodott! 
+	% opstack.push(obj) kell ha kozvetlenul fordul elo
+	% vegrehajtas csak a nev hivatkozas feloldasnal tortenik!
+	% miert hajtodott vegre?
+	% mert beagyazva volt es {mutat}-executable array lett az opstack tetejen
+	% utana bemasolodott egy vegrehajthato tombbe az 1. elemnek.
+	% amikor ez a vegrehajthato tomb elemenkent kiertekelodik,
+	% az executable array tipusu objektumot vegrehajtja az exec()
+	repeat
+} repeat
+
+
+(===Itt egy dupla ciklus===) print
+0 1 7 {
+	0 1 4 { = } for
+} for
+(===dupla ciklus vege===) print
+
+/inch {72 mul} def
+
+3 {
+	(Ciklus tesztek:) print
+	0 1 10 {=} for
+	0 1 10 {1 add =} for
+	0 1 10 {2 add =} for
+	0 1 10 {inch =} for
+	0 -1 -10 {=} for
+	-10 1 0 {=} for
+} repeat
+
+3 { (Jo napot kivanok!) print } repeat
+
+webHauser 
+print
+
+mutat
+mutat
+mutat
+mutat
+mutat
+
+(=====Operand Stack dump====== items:) print count = count {=} repeat
+
+quit
+/quit cvx exec
+(quit) cvx exec
+

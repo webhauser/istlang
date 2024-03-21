@@ -1,0 +1,76 @@
+/* 0 def
+/a null def
+/bind null def
+/space 32 def
+/inch {72 mul} def
+5 inch
+[1.0 2.0 
+ 3.0 [/a /b
+	  /c /d]4.0]{def}	/Eternity (http://hu.eternityii.com) def(EternityHello\
+World(!))/webHauser	[1]a<1234>*
+%% Ez itt comment az új sor végéig
+ 	 %% comment
+	1	1234 add (\\\n)
+10 20 30 [40 50 50.1 -50.2] 50.34 
+	-.002	 (float\
+ing())
+		
+		/proc {10 20 add 2 mul /okos }/jo bind def   
+/ok (Hogy megy?) /ez 
+/font (Hello\100.\(\
+%%no comment\\World) def
+34. /def 
+
+(Hexadecimal string constant) <CAFEBABE> space
+(Hexadecimal string constant) <CAFEBABE>
+
+<~ %% Ascii base-85 string literal ~>1
+
+
+% A Dictionary Example
+<</DEBUG true /ScreenSize [1024 768]>>
+
+%% System Operators
+
+% Define Basic Array Operations
+% Nem lehet atdefinialni ] jelet!
+%%	/[ mark def
+%%	/] {counttomark array astore exch pop} def
+
+
+<<
+
+/Hauser (Hau)
+/Istvan (Ist)
+/Mini 1
+
+% >> is equivalent to:
+counttomark 2 idiv dup dict begin
+{def} repeat
+pop currentdict
+end
+
+{= =} forall
+
+(Stack manipulation:
+	pop
+	--a-- --b-- exch --b-- --a--
+	any	dup any any
+	clear
+	count
+(Array operators)
+	/array
+	/astore
+	mark
+	cleartomark
+	counttomark
+(Logical operators)
+	xor
+(Arithmetic operators)
+	add
+	mul
+	sub
+) print
+
+Eternity =
+font =

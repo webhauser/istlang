@@ -1,0 +1,15 @@
+/=string (______) def
+
+/my== {
+     <<
+     /integertype { =string cvs print }
+     /realtype { =string cvs print }
+     /arraytype { dup xcheck {
+                      ({ ) print {my==} forall (} ) print
+                  }{
+                      ([ ) print {my==} forall (] ) print
+                  } }
+     >> begin dup type exec
+} def
+
+[1 2 3 4 5] my==

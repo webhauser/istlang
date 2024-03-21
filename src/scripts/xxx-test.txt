@@ -1,0 +1,31 @@
+
+10 dict dup
+/pi 3.1415926 put dup
+/e 2.718281 put dup
+/cm {28.35 mul} put dup
+/e get =
+/cm get =
+
+
+%!PS
+/inch {72 mul} def
+/Circle 10 dict def
+Circle begin
+	/radius 3 inch def
+	/linewidth 0.5 inch def
+	/Draw {
+		(Line width is:) print linewidth =
+		(Radius is:) print radius =
+	} def
+end
+Circle begin
+	4.25 inch 5.5 inch Draw
+end
+
+(----------------Dictionary test---------------) print
+
+
+<</ScreenWidth 1024 /ScreenHeight 768>>	{= =} forall
+
+(----------------Operand Stack dump-----------------) print
+count {=} repeat

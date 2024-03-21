@@ -1,0 +1,23 @@
+%% MISSING operators:
+%% matrix
+%% bind
+%%
+
+
+matrix matrix eq = % false
+
+%% ERROR
+(%% comparing operator objects:\n) print
+{ 1 2 add } bind 2 get
+/add load eq = % true (if “add” has not been redefined)
+
+
+/show where { %if
+  systemdict eq % true (if “show” has not been redefined)
+} if
+5 dict 5 dict eq = % false (dictionaries created independently)
+
+% comparing file objects:
+(%stdin) (r) file
+currentfile eq = % true (most of the time)
+

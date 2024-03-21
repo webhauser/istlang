@@ -1,0 +1,17 @@
+%% This simple framework is based around the properties of the 
+%% type operator which yields a typename. More specifically, it yields
+%% an executable name which designates the type of the argument. 
+%% So you can easily implement a type-switch with a dictionary.
+
+<<
+    /integertype { (handle integer case\n) print } 
+    /realtype  { (handle floating-point case\n) print}
+    /arraytype {(handle array case\n) print}
+    /packedarraytype {(handle proc case\n) print}
+>> begin
+
+5 type exec
+5 type exec
+2.0 type exec
+{a b c} type exec
+

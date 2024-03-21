@@ -1,0 +1,17 @@
+%% string1 string2 append string
+% Function: Concatenates two strings together.
+/append {
+	2 copy length exch length add % find the length of the new
+	string dup
+	% string1 string2 string string
+	4 2 roll
+	% string string string1 string2
+	2 index 0 3 index
+	% string string string1 string2 string 0 string1
+	putinterval
+	% stuff the first string in.
+	% string string string1 string2
+	exch length exch putinterval
+} bind def
+
+(Hello ) (world!\n) append print

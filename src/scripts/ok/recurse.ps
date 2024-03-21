@@ -1,0 +1,13 @@
+%% Example 6.6: Recursion Using the Operand Stack
+% int recurse_proc int
+
+/recurse_proc { %def
+	dup 2 div truncate
+	2 mul cvi
+	1 index eq { %ifelse
+		% even number
+		1 add recurse_proc
+	} if
+} bind def
+
+2 recurse_proc

@@ -1,0 +1,29 @@
+%%
+%% pretty print operand stack
+%%
+
+/tmp(     )def
+/nl{(\n)print}def
+/println {print nl} def
+
+/dump-opstack {
+	(Operand stack: ) print 
+	count tmp cvs println
+	/cnt 1 def % line number counter
+	count {
+		cnt tmp cvs print (. ) print
+		/cnt cnt 1 add def % increment line number
+		=
+	} repeat
+} def
+
+%% test the procedure
+
+(one) (two) (three) (four) (five)
+
+dump-opstack
+
+(egy) (ketto) (harom) tmp
+
+pstack
+pexecstack

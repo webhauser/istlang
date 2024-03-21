@@ -1,0 +1,24 @@
+%% Example: Re-throwing errors
+%% This snippet implements a procedure which behaves like a postscript looping operator. 
+%% If the user proc calls exit, it catches the invalidexit error to fix the dictstack for 
+%% the end at the end. Any other error except invalidexit is re-thrown by calling stop.
+
+% array n proc  .  -
+% Like --forall-- but delivers length=n subsequences produced by getinterval
+/fortuple { 4 dict begin
+    0 {offset proc n arr} {exch def} forall
+    /arr load length n idiv
+    {
+        {
+            /arr load offset n getinterval
+            [ /proc load currentdict end /begin cvx ] cvx exec
+            /offset offset n add def
+        } stopped {
+            $error /errorname get /invalidexit eq
+            { 1 dict begin exit }{ stop } ifelse
+        } if
+    } repeat
+end
+} def
+
+%[ 0 1 10 {} for ] 3 {} fortuple pstack clear ()=

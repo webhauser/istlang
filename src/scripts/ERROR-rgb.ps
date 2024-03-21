@@ -1,0 +1,13 @@
+/setrgbcolor { 
+(====setrgbcolor====\n) print
+(B=) print =
+(G=) print =
+(R=) print =
+} def
+
+/cdef { [ 4 1 roll /setrgbcolor load ] cvx % bind 
+def } def
+
+/CR 1 0 0 cdef
+/CG 0 1 0 cdef
+/CB 0 0 1 cdef
